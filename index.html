@@ -243,7 +243,7 @@
             });
         }
 
-        // 點擊選單內的任意連結後，自動把選單收起來
+
         const sidebarLinks = document.querySelectorAll('#sidebar-wrapper .sidebar-nav-item a');
         sidebarLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -256,7 +256,84 @@
         });
     });
 </script>
+<div class="anime-companion-wrapper">
+    <div class="anime-bubble" id="anime-bubble">
+        點擊我可以聽台詞，或者讓我幫你抽一張動漫卡片吧！
+    </div>
 
+    <div class="anime-avatar" id="anime-avatar">
+        <span style="font-size: 40px;">💖</span>
+    </div>
+
+    <button class="btn btn-primary btn-sm gacha-btn" id="gacha-btn">
+        <i class="fas fa-bullhorn"></i> 進行召喚！
+    </button>
+</div>
+
+<div class="gacha-modal" id="gacha-modal">
+    <div class="gacha-content">
+        <h3 style="color: #ff7675; font-weight: 900;">✨ 召喚結果 ✨</h3>
+        <div class="gacha-result" id="gacha-result">
+        </div>
+        <button class="btn btn-dark btn-sm" id="close-gacha" style="margin-top: 15px;">確認</button>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const animeQuotes = [
+            "哼、才不是特別想陪你聊天的呢！",
+            "今天也是動漫能量滿滿的一天！(❁´◡`❁)",
+            "你有看最近那一集的新番嗎？超燃的！",
+            "真相，永遠只有一個！🕵️‍♂️",
+            "要是逃避的話，可就徹底輸了喔！",
+            "可惡...肚子有點餓了，想吃拉麵...🍜"
+        ];
+
+
+        const gachaPool = [
+            { name: "✨ SSR 葬送的芙莉蓮", desc: "獲得了千年魔法使的眷顧！" },
+            { name: "⚔️ SSR 艾爾登法環", desc: "褪色者啊，你充滿了決心。" },
+            { name: "⚡ SR 鬼滅之刃 炭治郎", desc: "全集中呼吸！斬斷惡鬼！" },
+            { name: "🏀 SR 灌籃高手 櫻木花道", desc: "我是天才！哈哈哈哈！" },
+            { name: "🎒 R 經典動漫全套", desc: "宅力值微幅提升！" }
+        ];
+
+        const bubble = document.getElementById('anime-bubble');
+        const avatar = document.getElementById('anime-avatar');
+        const gachaBtn = document.getElementById('gacha-btn');
+        const modal = document.getElementById('gacha-modal');
+        const resultDiv = document.getElementById('gacha-result');
+        const closeModal = document.getElementById('close-gacha');
+
+
+        avatar.addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * animeQuotes.length);
+            bubble.innerText = animeQuotes[randomIndex];
+        });
+
+
+        gachaBtn.addEventListener('click', () => {
+
+            const prize = gachaPool[Math.floor(Math.random() * gachaPool.length)];
+
+
+            resultDiv.innerHTML = `
+            <div class="gacha-result-card">${prize.name}</div>
+            <p style="font-weight:600; color:#6c757d;">${prize.desc}</p>
+        `;
+
+
+            modal.style.display = 'flex';
+            bubble.innerText = "哇！竟然召喚出了不得了的東西呢！";
+        });
+
+
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    });
+</script>
 </body>
 </html>
 
